@@ -1,0 +1,193 @@
+<div class="col-md-4">
+
+  <button class="btn btn-default" ng-click="addLayer()"><span class="glyphicon glyphicon-plus-sign"></span> Add Layer</button>
+  <button class="btn btn-default" ng-click=""><span class="glyphicon glyphicon-floppy-save"></span> Save Style</button>
+  <button class="btn btn-default" ng-click=""><span class="glyphicon glyphicon-floppy-open"></span> Load Style</button>
+
+
+  <hr />
+
+
+  <accordion>
+  <accordion-group is-open="status.open" ng-repeat="layer in basemaplayers">
+  <accordion-heading>
+    {{layer.featureType}}
+    <span class="pull-left label label-default">{{layer.elementType}}    </span>
+    <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></span>
+  </accordion-heading>
+
+
+
+  <div class="row">
+    <div class = "col-md-2">
+        <label class="checkbox-inline">
+          <input type="checkbox" ng-model="visibilityState" ng-change="clearStyle(layer.stylers,'visibility',visibilityState)">Visibility
+        </label>
+    </div>
+    <div class = "col-md-7">
+      <label class="radio-inline">
+        <input ng-disabled="!visibilityState" type="radio" ng-model="layer.stylers.visibility"  value="on"> On
+      </label>
+      <label class="radio-inline">
+        <input ng-disabled="!visibilityState" type="radio" ng-model="layer.stylers.visibility" value="simplified"> Simplified
+      </label>
+      <label class="radio-inline">
+        <input ng-disabled="!visibilityState" type="radio" ng-model="layer.stylers.visibility" value="off"> Off
+      </label>
+    </div>
+
+    <div class = "col-md-3">
+          {{layer.stylers.visibility}}
+    </div>
+  </div>
+
+  <hr/>
+
+  <div class="row">
+    <div class = "col-md-2">
+        <label class="checkbox-inline">
+          <input type="checkbox" ng-model="colorState" ng-change="clearStyle(layer.stylers,'color',colorState)">Color
+        </label>
+    </div>
+    <div class = "col-md-7">
+  <input  ng-disabled="!colorState" colorpicker ng-model="layer.stylers.color" type="text" class="form-control">
+    </div>
+
+    <div class = "col-md-3">
+          {{layer.stylers.color}}
+    </div>
+  </div>
+
+  <hr/>
+
+  <div class="row">
+    <div class = "col-md-2">
+
+    </div>
+    <div class = "col-md-7">
+          <label class="checkbox-inline">
+          <input type="checkbox" ng-model="layer.stylers.invert_lightness" ng-change="clearStyle(layer.stylers,'invert_lightness',layer.stylers.invert_lightness)">Invert lightness 
+        </label>
+    </div>
+
+    <div class = "col-md-3">
+          {{invert_lightnessState}}
+    </div>
+  </div>
+
+  <hr/>
+
+  <div class="row">
+    <div class = "col-md-2">
+        <label class="checkbox-inline">
+          <input type="checkbox" ng-model="widthState" ng-change="clearStyle(layer.stylers,'width',widthState)">Width
+        </label>
+    </div>
+    <div class = "col-md-7">
+        <slider ng-click="widthState = true" ng-model="layer.stylers.width" floor="1" ceiling="8" step="0.1" precision="2"></slider>
+    </div>
+
+    <div class = "col-md-3">
+      <input ng-disabled="!widthState" type="number" class="form-control" ng-model="layer.stylers.width">
+    </div>
+  </div>
+
+  <hr/>
+
+  <div class="row">
+    <div class = "col-md-2">
+        <label class="checkbox-inline">
+          <input type="checkbox" ng-model="hueState" ng-change="clearStyle(layer.stylers,'hue',hueState)">Hue
+        </label>
+    </div>
+    <div class = "col-md-7">
+  <input  ng-disabled="!hueState" colorpicker ng-model="layer.stylers.hue" type="text" class="form-control">
+    </div>
+
+    <div class = "col-md-3">
+          {{layer.stylers.hue}}
+    </div>
+  </div>
+
+  <hr/>
+
+
+  <div class="row">
+    <div class = "col-md-2">
+        <label class="checkbox-inline">
+          <input type="checkbox" ng-model="saturationState" ng-change="clearStyle(layer.stylers,'width',saturationState)">Saturation
+        </label>
+    </div>
+    <div class = "col-md-7">
+        <slider ng-click="saturationState = true" ng-model="layer.stylers.saturation" floor="-100" ceiling="100" step="1" precision="2"></slider>
+    </div>
+
+    <div class = "col-md-3">
+      <input ng-disabled="!saturationState" type="number" class="form-control" ng-model="layer.stylers.saturation">
+    </div>
+  </div>
+
+  <hr/>
+
+  <div class="row">
+    <div class = "col-md-2">
+        <label class="checkbox-inline">
+          <input type="checkbox" ng-model="lightnessState" ng-change="clearStyle(layer.stylers,'lightness',lightnessState)">Lightness
+        </label>
+    </div>
+    <div class = "col-md-7">
+        <slider ng-click="lightnessState = true" ng-model="layer.stylers.lightness" floor="-100" ceiling="100" step="1" precision="2"></slider>
+    </div>
+
+    <div class = "col-md-3">
+      <input ng-disabled="!lightnessState" type="number" class="form-control" ng-model="layer.stylers.lightness">
+    </div>
+  </div>
+
+  <hr/>
+
+  <div class="row">
+    <div class = "col-md-2">
+        <label class="checkbox-inline">
+          <input type="checkbox" ng-model="gammaState" ng-change="clearStyle(layer.stylers,'gamma',gammaState)">Gamma
+        </label>
+    </div>
+    <div class = "col-md-7">
+        <slider ng-click="gammaState = true" ng-model="layer.stylers.gamma" floor="9.99" ceiling="0.01" step="0.01" precision="2"></slider>
+    </div>
+
+    <div class = "col-md-3">
+      <input ng-disabled="!gammaState" type="number" class="form-control" ng-model="layer.stylers.gamma">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class = "col-md-2">
+
+    </div>
+    <div class = "col-md-7">
+          <button type="button" class="btn btn-default" ng-click="status.open = !status.open"><span class="glyphicon glyphicon-ok-sign"></span>
+   Close</button>
+          <button type="button" class="btn btn-danger" ng-click="removeLayer($index)"> <span class="glyphicon glyphicon-remove-sign"></span>
+  Delete</button>
+    </div>
+
+   
+   
+
+
+    <div class = "col-md-3">
+      
+    </div>
+  </div>
+
+  </accordion-group>
+  </accordion>
+
+
+  <hr />
+  {{basemaplayers}}
+</div>
+<div class="col-md-8">
+<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+</div>

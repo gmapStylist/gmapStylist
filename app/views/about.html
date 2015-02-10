@@ -1,0 +1,209 @@
+
+
+
+
+<p>This is the about view.</p>
+
+$scope.isEdited = false;
+$scope.isVisible = false;
+$scope.isSimplified = false;
+$scope.isInvertLightness = false;
+
+$scope.isReadonly = false;
+
+$scope.Simplified = function(simp_stylers) {
+
+	$scope.isSimplified = !$scope.isSimplified;
+	if($scope.isSimplified) {
+		simp_stylers.visibility = 'simplified';
+		$scope.isVisible = false;
+	} else {
+		simp_stylers.visibility = 'off';
+	}
+};
+
+$scope.Visibility = function(vis_stylers) {
+
+	$scope.isVisible = !$scope.isVisible;
+	if($scope.isVisible) {
+		vis_stylers.visibility = 'on';
+		$scope.isSimplified = false;
+	} else {
+		vis_stylers.visibility = 'off';
+	}
+};
+
+$scope.InvertLightness = function(il_stylers) {
+
+	$scope.isInvertLightness = !$scope.isInvertLightness;
+	il_stylers.invert_lightness = $scope.isInvertLightness;
+};
+
+$scope.DeleteWidth = function(wd_stylers, state) {
+console.log("checkbox state:" + state);
+
+	if(!state)
+	{
+		delete wd_stylers.width;
+	}
+
+};
+
+$scope.SliderState = function(check_box_state) {
+console.log("slider:" + check_box_state);
+	if(check_box_state === false) {
+		check_box_state = true;
+		console.log("rn");
+	}
+
+};
+
+
+    $scope.alert = function () {
+        alert('x');
+    };
+//'on'
+//'simplified'
+//'off'
+
+
+
+
+
+  <div class="panel panel-default" ng-repeat="layer in basemaplayers">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+                    {{layer.featureType}}
+
+                    <span class="label label-default">{{layer.elementType}}</span>
+                   
+             
+      <div class="pull-right">
+        <span class="linewidth">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 13
+        <span colorpicker="hex" colorpicker-with-input="true" ng-model="layer.stylers.color" class="glyphicon glyphicon-stop" style="color: {{layer.stylers.color}};"></span>
+
+        <a href="" ng-click="isEdited = !isEdited" role="button"><span class="glyphicon  glyphicon glyphicon-edit" aria-hidden="true" ng-class="{'text-muted': isEdited, 'clickedIcon': !isEdited}"></span></a>
+
+        <a href="" ng-click="Visibility(layer.stylers)" role="button">
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true" ng-class="{'text-muted': !isVisible, 'clickedIcon':isVisible}"></span>
+        </a>
+
+        <a href="" ng-click="Simplified(layer.stylers)" role="button"><span class="glyphicon glyphicon-eye-close" aria-hidden="true" ng-class="{'text-muted': !isSimplified, 'clickedIcon':isSimplified}"></span></a>
+
+        <a href="" ng-click="InvertLightness(layer.stylers)" role="button"><span class="glyphicon glyphicon glyphicon-adjust" aria-hidden="true" ng-class="{'text-muted':isInvertLightness, 'clickedIcon':!isInvertLightness}"></span></a>
+
+        <a href="" ng-click="" role="button"> <span class="glyphicon glyphicon-trash clickedIcon" aria-hidden="true"></span></a>
+      </div>
+      </h4>
+    </div>
+
+    <div collapse="isEdited">
+      <div class="panel-body">
+
+
+
+
+          <div class="row">
+            <div class = "col-md-2">
+                <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="isReadonly" ng-change="DeleteWidth(layer.stylers, isReadonly)">Width
+                </label>
+                {{isReadonly}}
+              </div>
+            </div>
+            <div class = "col-md-7">
+                <slider ng-click="isReadonly = true" ng-model="layer.stylers.width" floor="1" ceiling="10" step="0.1" precision="2"></slider>
+            </div>
+
+            <div class = "col-md-3">
+                  <input ng-disabled="!isReadonly" type="number" class="form-control" ng-model="layer.stylers.width">
+            </div>
+          </div>
+
+          <hr/>
+
+          <div class="row">
+            <div class = "col-md-2">
+                <div class="checkbox">
+                <label>
+                  <input type="checkbox">Hue
+                </label>
+              </div>
+            </div>
+
+            <div class = "col-md-7">
+                <slider ng-model="layer.stylers.hue" floor="-100" step="1" ceiling="100" value="2"  sliderid="2"></slider>
+            </div>
+
+            <div class = "col-md-3">
+                  <input type="number" class="form-control" ng-model="layer.stylers.hue">
+            </div>
+          </div>
+
+          <hr/>
+
+          <div class="row">
+            <div class = "col-md-2">
+                <div class="checkbox">
+                <label>
+                  <input type="checkbox">Saturation
+                </label>
+              </div>
+            </div>
+
+            <div class = "col-md-7">
+                <slider ng-model="layer.stylers.saturation" floor="-100" step="1" ceiling="100" value="2"  sliderid="3"></slider>
+            </div>
+
+            <div class = "col-md-3">
+                  <input type="number" class="form-control" ng-model="layer.stylers.saturation">
+            </div>
+          </div>
+
+          <hr/>
+
+          <div class="row">
+            <div class = "col-md-2">
+                <div class="checkbox">
+                <label>
+                  <input type="checkbox">Lightness
+                </label>
+              </div>
+            </div>
+
+            <div class = "col-md-7">
+                <slider ng-model="layer.stylers.lightness" floor="-100" step="1" ceiling="100" value="2" sliderid="4"></slider>
+            </div>
+
+            <div class = "col-md-3">
+                  <input type="number" class="form-control" ng-model="layer.stylers.lightness">
+            </div>
+          </div>
+
+          <hr/>
+
+          <div class="row">
+            <div class = "col-md-2">
+                <div class="checkbox">
+                <label>
+                  <input type="checkbox">Gamma
+                </label>
+              </div>
+            </div>
+
+            <div class = "col-md-7">
+                <slider ng-model="layer.stylers.gamma" floor="0.01" step="0.10" ceiling="10.01"  precision="2"></slider>
+            </div>
+
+            <div class = "col-md-3">
+                  <input type="number" class="form-control" ng-model="layer.stylers.gamma">
+            </div>
+          </div>
+
+
+
+
+      </div> <!--panel-body-->
+    </div> <!--toggle class isEdited-->
+    </div> <!--panel-->
