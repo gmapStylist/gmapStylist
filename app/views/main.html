@@ -1,7 +1,10 @@
 <div class="col-md-4">
+  <h1>gmapStylist</h1>
+
+  <hr />
 
   <button class="btn btn-default" ng-click="addLayer()"><span class="glyphicon glyphicon-plus-sign"></span> Add Layer</button>
-  <button class="btn btn-default" ng-click=""><span class="glyphicon glyphicon-floppy-save"></span> Save Style</button>
+  <button class="btn btn-default" ng-click="testFunction()"><span class="glyphicon glyphicon-floppy-save"></span> Save Style</button>
   <button class="btn btn-default" ng-click=""><span class="glyphicon glyphicon-floppy-open"></span> Load Style</button>
 
 
@@ -9,7 +12,7 @@
 
 
   <accordion>
-  <accordion-group is-open="status.open" ng-repeat="layer in basemaplayers">
+  <accordion-group is-open="status.open" ng-repeat="layer in map.options.styles">
   <accordion-heading>
     {{layer.featureType}}
     <span class="pull-left label label-default">{{layer.elementType}}    </span>
@@ -17,27 +20,27 @@
   </accordion-heading>
 
 
-
+<div>
   <div class="row">
     <div class = "col-md-2">
         <label class="checkbox-inline">
-          <input type="checkbox" ng-model="visibilityState" ng-change="clearStyle(layer.stylers,'visibility',visibilityState)">Visibility
+          <input type="checkbox" ng-model="visibilityState" ng-change="clearStyle(layer.stylers[0],'visibility',visibilityState)">Visibility
         </label>
     </div>
     <div class = "col-md-7">
       <label class="radio-inline">
-        <input ng-disabled="!visibilityState" type="radio" ng-model="layer.stylers.visibility"  value="on"> On
+        <input ng-disabled="!visibilityState" type="radio" ng-model="layer.stylers[0].visibility"  value="on"> On
       </label>
       <label class="radio-inline">
-        <input ng-disabled="!visibilityState" type="radio" ng-model="layer.stylers.visibility" value="simplified"> Simplified
+        <input ng-disabled="!visibilityState" type="radio" ng-model="layer.stylers[0].visibility" value="simplified"> Simplified
       </label>
       <label class="radio-inline">
-        <input ng-disabled="!visibilityState" type="radio" ng-model="layer.stylers.visibility" value="off"> Off
+        <input ng-disabled="!visibilityState" type="radio" ng-model="layer.stylers[0].visibility" value="off"> Off
       </label>
     </div>
 
     <div class = "col-md-3">
-          {{layer.stylers.visibility}}
+          {{layer.stylers[0].visibility}}
     </div>
   </div>
 
@@ -46,15 +49,15 @@
   <div class="row">
     <div class = "col-md-2">
         <label class="checkbox-inline">
-          <input type="checkbox" ng-model="colorState" ng-change="clearStyle(layer.stylers,'color',colorState)">Color
+          <input type="checkbox" ng-model="colorState" ng-change="clearStyle(layer.stylers[0],'color',colorState)">Color
         </label>
     </div>
     <div class = "col-md-7">
-  <input  ng-disabled="!colorState" colorpicker ng-model="layer.stylers.color" type="text" class="form-control">
+  <input  ng-disabled="!colorState" colorpicker ng-model="layer.stylers[0].color" type="text" class="form-control">
     </div>
 
     <div class = "col-md-3">
-          {{layer.stylers.color}}
+          {{layer.stylers[0].color}}
     </div>
   </div>
 
@@ -66,7 +69,7 @@
     </div>
     <div class = "col-md-7">
           <label class="checkbox-inline">
-          <input type="checkbox" ng-model="layer.stylers.invert_lightness" ng-change="clearStyle(layer.stylers,'invert_lightness',layer.stylers.invert_lightness)">Invert lightness 
+          <input type="checkbox" ng-model="layer.stylers[0].invert_lightness" ng-change="clearStyle(layer.stylers[0],'invert_lightness',layer.stylers[0].invert_lightness)">Invert lightness 
         </label>
     </div>
 
@@ -80,15 +83,15 @@
   <div class="row">
     <div class = "col-md-2">
         <label class="checkbox-inline">
-          <input type="checkbox" ng-model="widthState" ng-change="clearStyle(layer.stylers,'width',widthState)">Width
+          <input type="checkbox" ng-model="widthState" ng-change="clearStyle(layer.stylers[0],'width',widthState)">Width
         </label>
     </div>
     <div class = "col-md-7">
-        <slider ng-click="widthState = true" ng-model="layer.stylers.width" floor="1" ceiling="8" step="0.1" precision="2"></slider>
+        <slider ng-click="widthState = true" ng-model="layer.stylers[0].width" floor="1" ceiling="8" step="0.1" precision="2"></slider>
     </div>
 
     <div class = "col-md-3">
-      <input ng-disabled="!widthState" type="number" class="form-control" ng-model="layer.stylers.width">
+      <input ng-disabled="!widthState" type="number" class="form-control" ng-model="layer.stylers[0].width">
     </div>
   </div>
 
@@ -97,15 +100,15 @@
   <div class="row">
     <div class = "col-md-2">
         <label class="checkbox-inline">
-          <input type="checkbox" ng-model="hueState" ng-change="clearStyle(layer.stylers,'hue',hueState)">Hue
+          <input type="checkbox" ng-model="hueState" ng-change="clearStyle(layer.stylers[0],'hue',hueState)">Hue
         </label>
     </div>
     <div class = "col-md-7">
-  <input  ng-disabled="!hueState" colorpicker ng-model="layer.stylers.hue" type="text" class="form-control">
+  <input  ng-disabled="!hueState" colorpicker ng-model="layer.stylers[0].hue" type="text" class="form-control">
     </div>
 
     <div class = "col-md-3">
-          {{layer.stylers.hue}}
+          {{layer.stylers[0].hue}}
     </div>
   </div>
 
@@ -115,15 +118,15 @@
   <div class="row">
     <div class = "col-md-2">
         <label class="checkbox-inline">
-          <input type="checkbox" ng-model="saturationState" ng-change="clearStyle(layer.stylers,'width',saturationState)">Saturation
+          <input type="checkbox" ng-model="saturationState" ng-change="clearStyle(layer.stylers[0],'width',saturationState)">Saturation
         </label>
     </div>
     <div class = "col-md-7">
-        <slider ng-click="saturationState = true" ng-model="layer.stylers.saturation" floor="-100" ceiling="100" step="1" precision="2"></slider>
+        <slider ng-click="saturationState = true" ng-model="layer.stylers[0].saturation" floor="-100" ceiling="100" step="1" precision="2"></slider>
     </div>
 
     <div class = "col-md-3">
-      <input ng-disabled="!saturationState" type="number" class="form-control" ng-model="layer.stylers.saturation">
+      <input ng-disabled="!saturationState" type="number" class="form-control" ng-model="layer.stylers[0].saturation">
     </div>
   </div>
 
@@ -132,15 +135,15 @@
   <div class="row">
     <div class = "col-md-2">
         <label class="checkbox-inline">
-          <input type="checkbox" ng-model="lightnessState" ng-change="clearStyle(layer.stylers,'lightness',lightnessState)">Lightness
+          <input type="checkbox" ng-model="lightnessState" ng-change="clearStyle(layer.stylers[0],'lightness',lightnessState)">Lightness
         </label>
     </div>
     <div class = "col-md-7">
-        <slider ng-click="lightnessState = true" ng-model="layer.stylers.lightness" floor="-100" ceiling="100" step="1" precision="2"></slider>
+        <slider ng-click="lightnessState = true" ng-model="layer.stylers[0].lightness" floor="-100" ceiling="100" step="1" precision="2"></slider>
     </div>
 
     <div class = "col-md-3">
-      <input ng-disabled="!lightnessState" type="number" class="form-control" ng-model="layer.stylers.lightness">
+      <input ng-disabled="!lightnessState" type="number" class="form-control" ng-model="layer.stylers[0].lightness">
     </div>
   </div>
 
@@ -149,15 +152,15 @@
   <div class="row">
     <div class = "col-md-2">
         <label class="checkbox-inline">
-          <input type="checkbox" ng-model="gammaState" ng-change="clearStyle(layer.stylers,'gamma',gammaState)">Gamma
+          <input type="checkbox" ng-model="gammaState" ng-change="clearStyle(layer.stylers[0],'gamma',gammaState)">Gamma
         </label>
     </div>
     <div class = "col-md-7">
-        <slider ng-click="gammaState = true" ng-model="layer.stylers.gamma" floor="9.99" ceiling="0.01" step="0.01" precision="2"></slider>
+        <slider ng-click="gammaState = true" ng-model="layer.stylers[0].gamma" floor="9.99" ceiling="0.01" step="0.01" precision="2"></slider>
     </div>
 
     <div class = "col-md-3">
-      <input ng-disabled="!gammaState" type="number" class="form-control" ng-model="layer.stylers.gamma">
+      <input ng-disabled="!gammaState" type="number" class="form-control" ng-model="layer.stylers[0].gamma">
     </div>
   </div>
 
@@ -172,14 +175,12 @@
   Delete</button>
     </div>
 
-   
-   
-
-
     <div class = "col-md-3">
       
     </div>
   </div>
+
+  </div> <!--ng-repeat-->
 
   </accordion-group>
   </accordion>
@@ -187,7 +188,10 @@
 
   <hr />
   {{basemaplayers}}
+  <hr />
+  {{map.options}}
+
 </div>
-<div class="col-md-8">
-<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+<div class="col-md-8" style="padding-right:0;">
+<ui-gmap-google-map center='map.center' zoom='map.zoom' options='map.options' pan="true" control="map.control"></ui-gmap-google-map>
 </div>

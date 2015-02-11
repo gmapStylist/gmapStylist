@@ -18,23 +18,10 @@ angular.module('gmapStylistApp')
 })
 
 
-.controller('MainCtrl', function ($scope, $modal, uiGmapGoogleMapApiProvider) {
+.controller('MainCtrl', function ($scope, $modal, uiGmapGoogleMapApi) {
 
-	$scope.map = {
-					center: {
-						latitude: 51.47732,
-						longitude: -0.00037
-					},
-					options: {
-						maxZoom: 20,
-						minZoom: 3
-					},
-					zoom: 3,
-					control: {},
-					marker: {
-						idk:0
-					}
-				};
+
+
 
 
 $scope.basemaplayers =[];
@@ -47,8 +34,10 @@ $scope.clearStyle = function (StyleToClear, key, state) {
 
 
 $scope.removeLayer = function (index) {
-  $scope.basemaplayers.splice(index, 1);
+	$scope.map.options.styles.splice(index, 1);
 };
+
+
 
 $scope.addLayer = function (size) {
 
@@ -68,9 +57,9 @@ $scope.addLayer = function (size) {
 	    var newLayer = {
 	    	featureType: selectedItem.featureType,
 	    	elementType: selectedItem.elementType,
-	    	stylers: ''
+			stylers:[]	    	
 	    };      
-	    $scope.basemaplayers.push(newLayer);
+	    $scope.map.options.styles.push(newLayer);
 
     }, function () {
       //$log.info('Modal dismissed at: ' + new Date());
@@ -78,12 +67,42 @@ $scope.addLayer = function (size) {
   };
 
 
+$scope.testFunction = function() {
+
+
+    $scope.map.control.getGMap().setOptions({styles: $scope.map.options.styles});
+    return;
+};
+
+
 // uiGmapGoogleMapApi is a promise.
 // The "then" callback function provides the google.maps object.
 uiGmapGoogleMapApi.then(function(maps) {
 
+$scope.map = {
+center: {
+latitude: 51.47732,
+longitude: -0.00037
+},
+options: {
+maxZoom: 20,
+minZoom: 3,
+styles: []
+},
+zoom: 5,
+control: {}
+};
+
 });
 
+
+
+   $scope.$watch('map.options.styles', function(newVal, oldVal) {
+   			
+   			//console.log(newVal, oldVal);
+           //$scope.map.control.getGMap().setOptions({styles: $scope.map.options.styles});
+    		//return;
+   });
 
 
 

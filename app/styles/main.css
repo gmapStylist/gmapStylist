@@ -1,4 +1,12 @@
 
+.angular-google-map-container {
+  min-height: 400px;
+  box-shadow:0 3px 25px black;
+  height: 100vh;
+}
+
+
+
 
 .slider.slider-horizontal {
 width: 100%;
@@ -36,11 +44,12 @@ margin-top:8px;
 
 /*-----------GENERATED YEOMAN---------------------*/
 
-/* Space out content a bit */
+/* Space out content a bit 
 body {
   padding-top: 20px;
   padding-bottom: 20px;
 }
+*/
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
