@@ -75,10 +75,6 @@ $scope.testFunction = function() {
 };
 
 
-// uiGmapGoogleMapApi is a promise.
-// The "then" callback function provides the google.maps object.
-uiGmapGoogleMapApi.then(function(maps) {
-
 $scope.map = {
 center: {
 latitude: 51.47732,
@@ -93,16 +89,24 @@ zoom: 5,
 control: {}
 };
 
+
+// uiGmapGoogleMapApi is a promise.
+// The "then" callback function provides the google.maps object.
+uiGmapGoogleMapApi.then(function(maps) {
+
+
+   $scope.$watch('map.options.styles | json', function(newVal, oldVal) {
+
+           $scope.map.control.getGMap().setOptions({styles: $scope.map.options.styles});
+
+   });
+
+
+
 });
 
 
 
-   $scope.$watch('map.options.styles', function(newVal, oldVal) {
-   			
-   			//console.log(newVal, oldVal);
-           //$scope.map.control.getGMap().setOptions({styles: $scope.map.options.styles});
-    		//return;
-   });
 
 
 
