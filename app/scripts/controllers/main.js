@@ -21,10 +21,18 @@ angular.module('gmapStylistApp')
 .controller('MainCtrl', function ($scope, $modal, uiGmapGoogleMapApi) {
 
 
+$scope.alerts =[];
 
+$scope.editorOptions = {
+    lineWrapping : true,
+    lineNumbers: true,
+	matchBrackets: true,
+	autoCloseBrackets: true,
+	theme: 'rubyblue',
+	mode: "application/ld+json"
+  
+};
 
-
-$scope.basemaplayers =[];
 
 $scope.clearStyle = function (StyleToClear, key, state) {
 	if(!state) {
@@ -75,6 +83,26 @@ $scope.testFunction = function() {
 };
 
 
+
+
+$scope.jsonTextChange = function() {
+	 try {
+
+		$scope.map.options.styles = angular.fromJson($scope.jsonText);
+		$scope.alerts = [];
+
+	 } catch(err) {
+
+  	    $scope.alerts[0] = {type: 'danger', info: 'Inavlid JSON:', msg: err.message};
+	 }
+
+};
+
+  $scope.closeAlert = function(index) {
+    $scope.alerts.splice(index, 1);
+  };
+
+
 $scope.map = {
 center: {
 latitude: 51.47732,
@@ -90,17 +118,20 @@ control: {}
 };
 
 
+
+
+
 // uiGmapGoogleMapApi is a promise.
 // The "then" callback function provides the google.maps object.
 uiGmapGoogleMapApi.then(function(maps) {
 
-
    $scope.$watch('map.options.styles | json', function(newVal, oldVal) {
+		 //if (newValue != oldValue) {
+		          $scope.map.control.getGMap().setOptions({styles: $scope.map.options.styles});
+		          $scope.jsonText =  angular.toJson($scope.map.options.styles, true);
 
-           $scope.map.control.getGMap().setOptions({styles: $scope.map.options.styles});
-
+		//}
    });
-
 
 
 });

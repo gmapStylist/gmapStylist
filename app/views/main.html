@@ -1,8 +1,15 @@
-<div class="col-md-4">
+
+<div class="col-md-6">
   <h1>gmapStylist</h1>
 
   <hr />
 
+<div class="col-md-6">
+  <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><strong>{{alert.info}}</strong>{{alert.msg}}</alert>
+  <ui-codemirror ui-codemirror-opts="editorOptions"  ng-change="jsonTextChange()" ng-model="jsonText" ></ui-codemirror>
+</div>
+
+<div class="col-md-6">
   <button class="btn btn-default" ng-click="addLayer()"><span class="glyphicon glyphicon-plus-sign"></span> Add Layer</button>
   <button class="btn btn-default" ng-click="testFunction()"><span class="glyphicon glyphicon-floppy-save"></span> Save Style</button>
   <button class="btn btn-default" ng-click=""><span class="glyphicon glyphicon-floppy-open"></span> Load Style</button>
@@ -186,7 +193,9 @@
   </accordion>
 
 
-</div>
-<div class="col-md-8" style="padding-right:0;">
+</div> <!--md 6-->
+</div> <!--md 6-->
+
+<div class="col-md-6" style="padding-right:0;">
 <ui-gmap-google-map center='map.center' zoom='map.zoom' options='map.options' pan="true" control="map.control"></ui-gmap-google-map>
 </div>

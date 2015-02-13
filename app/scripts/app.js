@@ -19,7 +19,8 @@ angular
     'ui.bootstrap',
     'colorpicker.module',
     'ui.slider',
-    'uiGmapgoogle-maps'
+    'uiGmapgoogle-maps',
+    'ui.codemirror'
   ])
   .config(function ($routeProvider) {
     $routeProvider
