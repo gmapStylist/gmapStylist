@@ -6,40 +6,20 @@
 }
 
 
+.layercol {
+  overflow-y:auto;
+  height:100vh;
+}
 
+.CodeMirror-wrap {
+  height:70vh;
+}
 
 .slider.slider-horizontal {
 width: 100%;
 margin-top:8px;
 }
 
-
-/*------------------------------------------------------------*/
-.clickedIcon {
-  color: #333;
-  text-decoration: none;
-}
-
-
-
-
-
-
-
-.linewidth {
-    position: relative;
-}
-
-.linewidth::after {
-  position: absolute;
-  left: 0;
-  top: 40%;
-  height: 3px;
-  background: #333;
-  content: "";
-  width: 100%;
-  display: block;
-}
 
 
 /*-----------GENERATED YEOMAN---------------------*/
